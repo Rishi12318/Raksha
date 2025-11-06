@@ -1,4 +1,14 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+# Raksha Sutra - Digital Protection Thread 🛡️
+
+A React Native Android application for personal safety with GPS tracking, SOS alerts, and Bluetooth smartwatch integration.
+
+## Features
+
+- 📍 **Real-time GPS Tracking** - Continuous location monitoring
+- 🚨 **SOS Emergency Button** - Quick access to emergency services
+- 📱 **Smart Alerts** - Send location to emergency contacts
+- 🔗 **Bluetooth Integration** - Connect with smartwatch devices
+- ⚙️ **Customizable Settings** - Configure safety preferences
 
 # Getting Started
 
