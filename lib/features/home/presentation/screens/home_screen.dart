@@ -851,41 +851,48 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: Column(
             children: [
               SizedBox(
-                height: 150,
+                height: 180,
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceAround,
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: List.generate(7, (index) {
-                    final height = (heartRateData[index] / 100) * 150;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          '${heartRateData[index]}',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: color,
-                          ),
+                    final height = (heartRateData[index] / 100) * 120;
+                    return Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              '${heartRateData[index]}',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold,
+                                color: color,
+                              ),
+                              overflow: TextOverflow.clip,
+                            ),
+                            const SizedBox(height: 4),
+                            Container(
+                              width: 24,
+                              height: height,
+                              decoration: BoxDecoration(
+                                color: color,
+                                borderRadius: BorderRadius.circular(6),
+                              ),
+                            ),
+                            const SizedBox(height: 6),
+                            Text(
+                              days[index],
+                              style: const TextStyle(
+                                fontSize: 9,
+                                color: Colors.black54,
+                              ),
+                              overflow: TextOverflow.clip,
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 4),
-                        Container(
-                          width: 30,
-                          height: height,
-                          decoration: BoxDecoration(
-                            color: color,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          days[index],
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
+                      ),
                     );
                   }),
                 ),
@@ -1025,35 +1032,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: List.generate(7, (index) {
                     final height = (stepsData[index] / 12000) * 150;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          '${(stepsData[index] / 1000).toStringAsFixed(1)}k',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: color,
-                          ),
+                    return Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              '${(stepsData[index] / 1000).toStringAsFixed(1)}k',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold,
+                                color: color,
+                              ),
+                              overflow: TextOverflow.clip,
+                            ),
+                            const SizedBox(height: 4),
+                            Container(
+                              width: 24,
+                              height: height,
+                              decoration: BoxDecoration(
+                                color: color,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              days[index],
+                              style: const TextStyle(
+                                fontSize: 9,
+                                color: Colors.black54,
+                              ),
+                              overflow: TextOverflow.clip,
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 4),
-                        Container(
-                          width: 30,
-                          height: height,
-                          decoration: BoxDecoration(
-                            color: color,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          days[index],
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
+                      ),
                     );
                   }),
                 ),
@@ -1200,35 +1214,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: List.generate(7, (index) {
                     final height = (caloriesData[index] / 500) * 150;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          '${caloriesData[index]}',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: color,
-                          ),
+                    return Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              '${caloriesData[index]}',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold,
+                                color: color,
+                              ),
+                              overflow: TextOverflow.clip,
+                            ),
+                            const SizedBox(height: 4),
+                            Container(
+                              width: 24,
+                              height: height,
+                              decoration: BoxDecoration(
+                                color: color,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              days[index],
+                              style: const TextStyle(
+                                fontSize: 9,
+                                color: Colors.black54,
+                              ),
+                              overflow: TextOverflow.clip,
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 4),
-                        Container(
-                          width: 30,
-                          height: height,
-                          decoration: BoxDecoration(
-                            color: color,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          days[index],
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
+                      ),
                     );
                   }),
                 ),
@@ -1344,35 +1365,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: List.generate(7, (index) {
                     final height = (sleepData[index] / 10) * 150;
-                    return Column(
-                      mainAxisAlignment: MainAxisAlignment.end,
-                      children: [
-                        Text(
-                          '${sleepData[index]}h',
-                          style: TextStyle(
-                            fontSize: 10,
-                            fontWeight: FontWeight.bold,
-                            color: color,
-                          ),
+                    return Expanded(
+                      child: Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 2),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.end,
+                          children: [
+                            Text(
+                              '${sleepData[index]}h',
+                              style: TextStyle(
+                                fontSize: 9,
+                                fontWeight: FontWeight.bold,
+                                color: color,
+                              ),
+                              overflow: TextOverflow.clip,
+                            ),
+                            const SizedBox(height: 4),
+                            Container(
+                              width: 24,
+                              height: height,
+                              decoration: BoxDecoration(
+                                color: color,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            Text(
+                              days[index],
+                              style: const TextStyle(
+                                fontSize: 9,
+                                color: Colors.black54,
+                              ),
+                              overflow: TextOverflow.clip,
+                            ),
+                          ],
                         ),
-                        const SizedBox(height: 4),
-                        Container(
-                          width: 30,
-                          height: height,
-                          decoration: BoxDecoration(
-                            color: color,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                        ),
-                        const SizedBox(height: 8),
-                        Text(
-                          days[index],
-                          style: const TextStyle(
-                            fontSize: 10,
-                            color: Colors.black54,
-                          ),
-                        ),
-                      ],
+                      ),
                     );
                   }),
                 ),
@@ -1869,26 +1897,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   Widget _buildEmergencyCard(String title, IconData icon, Color color) {
     return GestureDetector(
-      onTap: () {
-        showDialog(
-          context: context,
-          builder: (context) => AlertDialog(
-            title: Text(title),
-            content: Text('Emergency service for $title will be contacted.'),
-            actions: [
-              TextButton(
-                onPressed: () => Navigator.pop(context),
-                child: const Text('Cancel'),
-              ),
-              ElevatedButton(
-                onPressed: () => Navigator.pop(context),
-                style: ElevatedButton.styleFrom(backgroundColor: color),
-                child: const Text('Call Now'),
-              ),
-            ],
-          ),
-        );
-      },
+      onTap: () => _showEmergencyDetails(title, icon, color),
       child: Container(
         decoration: BoxDecoration(
           color: color,
@@ -2111,30 +2120,951 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildQuickActionCard(String title, IconData icon, Color color) {
-    return Container(
-      decoration: BoxDecoration(
-        color: color,
-        borderRadius: BorderRadius.circular(24),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withOpacity(0.05),
-            blurRadius: 8,
-            offset: const Offset(0, 4),
+    return GestureDetector(
+      onTap: () => _showQuickActionDetails(title, icon, color),
+      child: Container(
+        decoration: BoxDecoration(
+          color: color,
+          borderRadius: BorderRadius.circular(24),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 4),
+            ),
+          ],
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(icon, size: 48, color: Colors.black54),
+            const SizedBox(height: 12),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  void _showEmergencyDetails(String title, IconData icon, Color color) {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black87,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.75,
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE8D5FF),
+            borderRadius: BorderRadius.circular(30),
           ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Icon(icon, color: Colors.white, size: 36),
+                      ),
+                      const SizedBox(width: 16),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            title,
+                            style: const TextStyle(
+                              fontSize: 22,
+                              fontWeight: FontWeight.bold,
+                              color: Colors.black87,
+                            ),
+                          ),
+                          const Text(
+                            'Emergency Service',
+                            style: TextStyle(
+                              fontSize: 14,
+                              color: Colors.black54,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      // Emergency Hotline
+                      Container(
+                        width: double.infinity,
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          children: [
+                            Icon(Icons.phone, color: color, size: 48),
+                            const SizedBox(height: 12),
+                            Text(
+                              _getEmergencyNumber(title),
+                              style: TextStyle(
+                                fontSize: 36,
+                                fontWeight: FontWeight.bold,
+                                color: color,
+                              ),
+                            ),
+                            const SizedBox(height: 8),
+                            const Text(
+                              '24/7 Emergency Hotline',
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black54,
+                              ),
+                            ),
+                            const SizedBox(height: 20),
+                            SizedBox(
+                              width: double.infinity,
+                              height: 50,
+                              child: ElevatedButton(
+                                onPressed: () {},
+                                style: ElevatedButton.styleFrom(
+                                  backgroundColor: color,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(15),
+                                  ),
+                                ),
+                                child: const Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Icon(Icons.phone, color: Colors.white),
+                                    SizedBox(width: 12),
+                                    Text(
+                                      'Call Now',
+                                      style: TextStyle(
+                                        fontSize: 18,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.white,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      
+                      // Quick Actions
+                      const Text(
+                        'Quick Actions',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      _buildActionItem('Share Location', Icons.location_on, color),
+                      const SizedBox(height: 8),
+                      _buildActionItem('Contact Emergency Contact', Icons.contact_phone, color),
+                      const SizedBox(height: 8),
+                      _buildActionItem('Send Alert Message', Icons.message, color),
+                      const SizedBox(height: 20),
+                      
+                      // Information
+                      const Text(
+                        'Important Information',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      Container(
+                        padding: const EdgeInsets.all(20),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              _getEmergencyInfo(title),
+                              style: const TextStyle(
+                                fontSize: 14,
+                                color: Colors.black87,
+                                height: 1.6,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                      const SizedBox(height: 20),
+                      
+                      // Recent Activity
+                      const Text(
+                        'Recent Activity',
+                        style: TextStyle(
+                          fontSize: 18,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      const SizedBox(height: 12),
+                      _buildActivityItem('No recent emergencies', Icons.check_circle, Colors.green.shade400),
+                      const SizedBox(height: 8),
+                      _buildActivityItem('Last contacted: Never', Icons.history, Colors.grey.shade400),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _showQuickActionDetails(String title, IconData icon, Color color) {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black87,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.75,
+          padding: const EdgeInsets.all(24),
+          decoration: BoxDecoration(
+            color: const Color(0xFFE8D5FF),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Row(
+                    children: [
+                      Container(
+                        padding: const EdgeInsets.all(16),
+                        decoration: BoxDecoration(
+                          color: color,
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        child: Icon(icon, color: Colors.black54, size: 36),
+                      ),
+                      const SizedBox(width: 16),
+                      Text(
+                        title,
+                        style: const TextStyle(
+                          fontSize: 24,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ],
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 24),
+              Expanded(
+                child: SingleChildScrollView(
+                  child: _buildQuickActionContent(title, color),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _buildQuickActionContent(String title, Color color) {
+    switch (title) {
+      case 'Smart AI':
+        return _buildSmartAIContent(color);
+      case 'Weather':
+        return _buildWeatherContent(color);
+      case 'Location':
+        return _buildLocationContent(color);
+      case 'Contacts':
+        return _buildContactsContent(color);
+      default:
+        return Container();
+    }
+  }
+
+  Widget _buildSmartAIContent(Color color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.psychology, color: color, size: 60),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                'AI Safety Assistant',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Your intelligent companion for safety',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        
+        const Text(
+          'AI Features',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 12),
+        _buildFeatureCard('Route Safety Analysis', 'AI analyzes your route for safety', Icons.route, Colors.blue.shade300),
+        const SizedBox(height: 8),
+        _buildFeatureCard('Threat Detection', 'Real-time environment monitoring', Icons.security, Colors.orange.shade300),
+        const SizedBox(height: 8),
+        _buildFeatureCard('Smart Alerts', 'Contextual emergency notifications', Icons.notifications_active, Colors.purple.shade300),
+        const SizedBox(height: 8),
+        _buildFeatureCard('Pattern Learning', 'Learns your safety patterns', Icons.psychology, Colors.green.shade300),
+      ],
+    );
+  }
+
+  Widget _buildWeatherContent(Color color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            children: [
+              Icon(Icons.wb_sunny, color: color, size: 80),
+              const SizedBox(height: 16),
+              const Text(
+                '24°C',
+                style: TextStyle(
+                  fontSize: 56,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const Text(
+                'Sunny',
+                style: TextStyle(
+                  fontSize: 18,
+                  color: Colors.black54,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'New Delhi, India',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black45,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        
+        const Text(
+          'Weather Forecast',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 12),
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceAround,
+          children: [
+            _buildWeatherCard('Mon', Icons.wb_sunny, '25°', color),
+            _buildWeatherCard('Tue', Icons.cloud, '22°', color),
+            _buildWeatherCard('Wed', Icons.wb_cloudy, '20°', color),
+          ],
+        ),
+        const SizedBox(height: 20),
+        
+        const Text(
+          'Weather Details',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 12),
+        _buildWeatherDetail('Humidity', '65%', Icons.water_drop),
+        const SizedBox(height: 8),
+        _buildWeatherDetail('Wind Speed', '12 km/h', Icons.air),
+        const SizedBox(height: 8),
+        _buildWeatherDetail('UV Index', '6 (Moderate)', Icons.wb_sunny),
+        const SizedBox(height: 8),
+        _buildWeatherDetail('Visibility', '10 km', Icons.visibility),
+      ],
+    );
+  }
+
+  Widget _buildLocationContent(Color color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: double.infinity,
+          height: 200,
+          decoration: BoxDecoration(
+            color: color.withOpacity(0.3),
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Center(
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.location_on, color: color, size: 80),
+                const SizedBox(height: 12),
+                const Text(
+                  'Your Current Location',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                const Text(
+                  'Connaught Place, New Delhi',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.black54,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+        const SizedBox(height: 20),
+        
+        const Text(
+          'Location Actions',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 12),
+        _buildActionItem('Share Live Location', Icons.share_location, color),
+        const SizedBox(height: 8),
+        _buildActionItem('Save Current Location', Icons.save, color),
+        const SizedBox(height: 8),
+        _buildActionItem('View Location History', Icons.history, color),
+        const SizedBox(height: 20),
+        
+        const Text(
+          'Saved Places',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 12),
+        _buildPlaceCard('Home', '123 Main Street, New Delhi', Icons.home, Colors.blue.shade300),
+        const SizedBox(height: 8),
+        _buildPlaceCard('Work', '456 Office Complex, Gurgaon', Icons.work, Colors.green.shade300),
+        const SizedBox(height: 8),
+        _buildPlaceCard('Gym', '789 Fitness Center, Delhi', Icons.fitness_center, Colors.orange.shade300),
+      ],
+    );
+  }
+
+  Widget _buildContactsContent(Color color) {
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Container(
+          width: double.infinity,
+          padding: const EdgeInsets.all(20),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(20),
+          ),
+          child: Column(
+            children: [
+              Container(
+                padding: const EdgeInsets.all(20),
+                decoration: BoxDecoration(
+                  color: color.withOpacity(0.2),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(Icons.contacts, color: color, size: 60),
+              ),
+              const SizedBox(height: 16),
+              const Text(
+                '5 Emergency Contacts',
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const SizedBox(height: 8),
+              const Text(
+                'Quick access to your trusted contacts',
+                style: TextStyle(
+                  fontSize: 14,
+                  color: Colors.black54,
+                ),
+              ),
+            ],
+          ),
+        ),
+        const SizedBox(height: 20),
+        
+        const Text(
+          'Emergency Contacts',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.bold,
+            color: Colors.black87,
+          ),
+        ),
+        const SizedBox(height: 12),
+        _buildContactCard('Mom', '+91 98765 43210', true, Colors.pink.shade300),
+        const SizedBox(height: 8),
+        _buildContactCard('Dad', '+91 98765 43211', true, Colors.blue.shade300),
+        const SizedBox(height: 8),
+        _buildContactCard('Sister', '+91 98765 43212', false, Colors.purple.shade300),
+        const SizedBox(height: 8),
+        _buildContactCard('Best Friend', '+91 98765 43213', false, Colors.green.shade300),
+        const SizedBox(height: 8),
+        _buildContactCard('Neighbor', '+91 98765 43214', false, Colors.orange.shade300),
+        const SizedBox(height: 20),
+        
+        SizedBox(
+          width: double.infinity,
+          height: 50,
+          child: ElevatedButton(
+            onPressed: () {},
+            style: ElevatedButton.styleFrom(
+              backgroundColor: color,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            child: const Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Icon(Icons.add, color: Colors.white),
+                SizedBox(width: 8),
+                Text(
+                  'Add New Contact',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ),
+      ],
+    );
+  }
+
+  String _getEmergencyNumber(String title) {
+    switch (title.replaceAll('\n', ' ')) {
+      case 'Domestic Violence':
+        return '1091';
+      case 'Harassment':
+        return '1091';
+      case 'Medical':
+        return '108';
+      case 'Legal Aid':
+        return '181';
+      default:
+        return '112';
+    }
+  }
+
+  String _getEmergencyInfo(String title) {
+    switch (title.replaceAll('\n', ' ')) {
+      case 'Domestic Violence':
+        return '• Available 24/7 for immediate assistance\n• Trained counselors and legal support\n• Confidential and free service\n• Multiple language support\n• Safe shelter information available';
+      case 'Harassment':
+        return '• Report incidents anonymously\n• Legal guidance and support\n• Evidence documentation assistance\n• Police complaint filing help\n• Follow-up support services';
+      case 'Medical':
+        return '• Emergency medical services\n• Ambulance dispatch\n• Hospital information\n• First aid guidance\n• 24/7 medical consultation';
+      case 'Legal Aid':
+        return '• Free legal consultation\n• Women rights information\n• Court proceedings guidance\n• Document preparation help\n• Lawyer referrals';
+      default:
+        return '• Immediate response team\n• Trained professionals\n• Confidential service\n• Free assistance';
+    }
+  }
+
+  Widget _buildActionItem(String title, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: color, size: 24),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 15,
+                fontWeight: FontWeight.w600,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+          Icon(Icons.arrow_forward_ios, color: Colors.grey.shade400, size: 18),
         ],
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
+    );
+  }
+
+  Widget _buildActivityItem(String title, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
         children: [
-          Icon(icon, size: 48, color: Colors.black54),
-          const SizedBox(height: 12),
+          Icon(icon, color: color, size: 24),
+          const SizedBox(width: 16),
           Text(
             title,
             style: const TextStyle(
-              fontSize: 15,
-              fontWeight: FontWeight.w600,
+              fontSize: 14,
               color: Colors.black87,
             ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildFeatureCard(String title, String subtitle, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: color, size: 28),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  title,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  subtitle,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.black54,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWeatherCard(String day, IconData icon, String temp, Color color) {
+    return Container(
+      width: 90,
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        children: [
+          Text(
+            day,
+            style: const TextStyle(
+              fontSize: 14,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+          const SizedBox(height: 8),
+          Icon(icon, color: color, size: 32),
+          const SizedBox(height: 8),
+          Text(
+            temp,
+            style: const TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildWeatherDetail(String title, String value, IconData icon) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: [
+          Icon(icon, color: Colors.grey.shade600, size: 24),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              title,
+              style: const TextStyle(
+                fontSize: 15,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+          Text(
+            value,
+            style: const TextStyle(
+              fontSize: 15,
+              fontWeight: FontWeight.bold,
+              color: Colors.black87,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPlaceCard(String name, String address, IconData icon, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: [
+          Container(
+            padding: const EdgeInsets.all(12),
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.2),
+              borderRadius: BorderRadius.circular(12),
+            ),
+            child: Icon(icon, color: color, size: 24),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  name,
+                  style: const TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.black87,
+                  ),
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  address,
+                  style: const TextStyle(
+                    fontSize: 13,
+                    color: Colors.black54,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildContactCard(String name, String phone, bool isPrimary, Color color) {
+    return Container(
+      padding: const EdgeInsets.all(16),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 50,
+            height: 50,
+            decoration: BoxDecoration(
+              color: color.withOpacity(0.3),
+              shape: BoxShape.circle,
+            ),
+            child: Center(
+              child: Text(
+                name[0],
+                style: TextStyle(
+                  fontSize: 22,
+                  fontWeight: FontWeight.bold,
+                  color: color,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(width: 16),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Row(
+                  children: [
+                    Flexible(
+                      child: Text(
+                        name,
+                        overflow: TextOverflow.ellipsis,
+                        style: const TextStyle(
+                          fontSize: 16,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.black87,
+                        ),
+                      ),
+                    ),
+                    if (isPrimary) ...[
+                      const SizedBox(width: 8),
+                      Container(
+                        padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+                        decoration: BoxDecoration(
+                          color: Colors.green.shade100,
+                          borderRadius: BorderRadius.circular(8),
+                        ),
+                        child: Text(
+                          'PRIMARY',
+                          style: TextStyle(
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.green.shade700,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ],
+                ),
+                const SizedBox(height: 4),
+                Text(
+                  phone,
+                  overflow: TextOverflow.ellipsis,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.black54,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          IconButton(
+            icon: Icon(Icons.phone, color: color),
+            onPressed: () {},
           ),
         ],
       ),
