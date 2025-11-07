@@ -1,17 +1,23 @@
 ﻿import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 import 'package:lottie/lottie.dart';
 import 'dart:math' as math;
+import 'package:intl/intl.dart';
+import '../providers/chat_provider.dart';
+import '../../data/models/chat_message.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeScreen extends ConsumerStatefulWidget {
   const HomeScreen({super.key});
 
   @override
-  State<HomeScreen> createState() => _HomeScreenState();
+  ConsumerState<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
+class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStateMixin {
   final PageController _pageController = PageController();
+  final TextEditingController _messageController = TextEditingController();
+  final ScrollController _chatScrollController = ScrollController();
   int _sosClickCount = 0;
   DateTime? _lastSOSClick;
   late AnimationController _flowerController;
@@ -40,8 +46,31 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   @override
   void dispose() {
     _pageController.dispose();
+    _messageController.dispose();
+    _chatScrollController.dispose();
     _flowerController.dispose();
     super.dispose();
+  }
+
+  void _scrollToBottom() {
+    if (_chatScrollController.hasClients) {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        _chatScrollController.animateTo(
+          _chatScrollController.position.maxScrollExtent,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeOut,
+        );
+      });
+    }
+  }
+
+  void _sendMessage() {
+    final message = _messageController.text.trim();
+    if (message.isNotEmpty) {
+      ref.read(chatProvider.notifier).sendMessage(message);
+      _messageController.clear();
+      _scrollToBottom();
+    }
   }
 
   void _handleSOSPress() {
@@ -1994,11 +2023,23 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   }
 
   Widget _buildMissLaraPage() {
+    final messages = ref.watch(chatProvider);
+    
+    // Auto-scroll when new messages arrive
+    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
       decoration: BoxDecoration(
-        color: Colors.white,
+        gradient: const LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [
+            Color(0xFFE8D5FF),
+            Color(0xFFD6BEFA),
+          ],
+        ),
         borderRadius: BorderRadius.circular(30),
         boxShadow: [
           BoxShadow(
@@ -2011,59 +2052,379 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Text(
-            'Miss Lara AI',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
-              color: Colors.black87,
+          Row(
+            children: [
+              Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  gradient: const LinearGradient(
+                    colors: [Color(0xFFCB94F7), Color(0xFFD6BEFA)],
+                  ),
+                  borderRadius: BorderRadius.circular(25),
+                  boxShadow: [
+                    BoxShadow(
+                      color: const Color(0xFFCB94F7).withOpacity(0.4),
+                      blurRadius: 8,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: const Icon(Icons.psychology, color: Colors.white, size: 28),
+              ),
+              const SizedBox(width: 12),
+              const Text(
+                'Miss Lara AI',
+                style: TextStyle(
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: Colors.black87,
+                ),
+              ),
+              const Spacer(),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.green.shade100,
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                child: Row(
+                  children: [
+                    Icon(Icons.circle, color: Colors.green.shade600, size: 8),
+                    const SizedBox(width: 6),
+                    Text(
+                      'Online',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.green.shade700,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              IconButton(
+                icon: const Icon(Icons.refresh, color: Colors.black54),
+                onPressed: () {
+                  ref.read(chatProvider.notifier).clearChat();
+                },
+                tooltip: 'Clear chat',
+              ),
+            ],
+          ),
+          const SizedBox(height: 16),
+          Expanded(
+            child: Container(
+              padding: const EdgeInsets.all(16),
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(20),
+              ),
+              child: messages.isEmpty
+                  ? const Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFCB94F7)),
+                      ),
+                    )
+                  : ListView.builder(
+                      controller: _chatScrollController,
+                      itemCount: messages.length,
+                      itemBuilder: (context, index) {
+                        final message = messages[index];
+                        if (message.isLoading) {
+                          return _buildTypingIndicator();
+                        }
+                        return _buildChatBubble(
+                          isLara: message.isLara,
+                          message: message.message,
+                          time: _formatTime(message.timestamp),
+                        );
+                      },
+                    ),
             ),
           ),
-          const SizedBox(height: 8),
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  const SizedBox(height: 20),
-                  SizedBox(
-                    width: 200,
-                    height: 200,
-                    child: Lottie.asset(
-                      'assets/animations/reading.json',
-                      fit: BoxFit.contain,
+          const SizedBox(height: 12),
+          // Quick action buttons
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: [
+                _buildQuickActionButton(
+                  'Safety Tips',
+                  Icons.security,
+                  () {
+                    ref.read(chatProvider.notifier).sendMessage('Give me safety tips');
+                    _scrollToBottom();
+                  },
+                ),
+                const SizedBox(width: 8),
+                _buildQuickActionButton(
+                  'Emergency Help',
+                  Icons.warning_amber_rounded,
+                  () {
+                    ref.read(chatProvider.notifier).sendMessage('What should I do in an emergency?');
+                    _scrollToBottom();
+                  },
+                ),
+                const SizedBox(width: 8),
+                _buildQuickActionButton(
+                  'Feeling Stressed',
+                  Icons.spa,
+                  () {
+                    ref.read(chatProvider.notifier).sendMessage('I\'m feeling stressed');
+                    _scrollToBottom();
+                  },
+                ),
+                const SizedBox(width: 8),
+                _buildQuickActionButton(
+                  'Random Tip',
+                  Icons.lightbulb_outline,
+                  () {
+                    ref.read(chatProvider.notifier).getSafetyTip();
+                    _scrollToBottom();
+                  },
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 12),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: Colors.black.withOpacity(0.05),
+                  blurRadius: 10,
+                  offset: const Offset(0, 2),
+                ),
+              ],
+            ),
+            child: Row(
+              children: [
+                IconButton(
+                  icon: const Icon(Icons.emoji_emotions_outlined, color: Color(0xFFCB94F7)),
+                  onPressed: () {
+                    // Could add emoji picker here
+                  },
+                ),
+                Expanded(
+                  child: TextField(
+                    controller: _messageController,
+                    decoration: const InputDecoration(
+                      hintText: 'Type your message...',
+                      hintStyle: TextStyle(color: Colors.grey),
+                      border: InputBorder.none,
                     ),
+                    onSubmitted: (_) => _sendMessage(),
                   ),
-                  const SizedBox(height: 20),
-                  const Text(
-                    'Your personal safety companion',
-                    textAlign: TextAlign.center,
+                ),
+                Container(
+                  width: 40,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFCB94F7), Color(0xFFD6BEFA)],
+                    ),
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: IconButton(
+                    icon: const Icon(Icons.send, color: Colors.white, size: 20),
+                    onPressed: _sendMessage,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildQuickActionButton(String label, IconData icon, VoidCallback onTap) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [Color(0xFFE8D5FF), Color(0xFFD6BEFA)],
+          ),
+          borderRadius: BorderRadius.circular(20),
+          border: Border.all(color: const Color(0xFFCB94F7), width: 1),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: const Color(0xFFCB94F7), size: 18),
+            const SizedBox(width: 6),
+            Text(
+              label,
+              style: const TextStyle(
+                color: Colors.black87,
+                fontSize: 13,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  Widget _buildTypingIndicator() {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        children: [
+          Container(
+            width: 35,
+            height: 35,
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFCB94F7), Color(0xFFD6BEFA)],
+              ),
+              borderRadius: BorderRadius.circular(17.5),
+            ),
+            child: const Icon(Icons.psychology, color: Colors.white, size: 20),
+          ),
+          const SizedBox(width: 8),
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+            decoration: BoxDecoration(
+              gradient: const LinearGradient(
+                colors: [Color(0xFFE8D5FF), Color(0xFFD6BEFA)],
+              ),
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                _buildDot(),
+                const SizedBox(width: 4),
+                _buildDot(delay: 200),
+                const SizedBox(width: 4),
+                _buildDot(delay: 400),
+              ],
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildDot({int delay = 0}) {
+    return TweenAnimationBuilder<double>(
+      tween: Tween(begin: 0.0, end: 1.0),
+      duration: const Duration(milliseconds: 600),
+      builder: (context, value, child) {
+        return Opacity(
+          opacity: (value * 2).clamp(0.0, 1.0),
+          child: Container(
+            width: 8,
+            height: 8,
+            decoration: const BoxDecoration(
+              color: Color(0xFFCB94F7),
+              shape: BoxShape.circle,
+            ),
+          ),
+        );
+      },
+    );
+  }
+
+  String _formatTime(DateTime timestamp) {
+    final now = DateTime.now();
+    final difference = now.difference(timestamp);
+
+    if (difference.inMinutes < 1) {
+      return 'Just now';
+    } else if (difference.inHours < 1) {
+      return '${difference.inMinutes}m ago';
+    } else if (difference.inDays < 1) {
+      return DateFormat('HH:mm').format(timestamp);
+    } else {
+      return DateFormat('MMM dd, HH:mm').format(timestamp);
+    }
+  }
+
+  Widget _buildChatBubble({
+    required bool isLara,
+    required String message,
+    required String time,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.only(bottom: 12),
+      child: Column(
+        crossAxisAlignment: isLara ? CrossAxisAlignment.start : CrossAxisAlignment.end,
+        children: [
+          Row(
+            mainAxisAlignment: isLara ? MainAxisAlignment.start : MainAxisAlignment.end,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              if (isLara) ...[
+                Container(
+                  width: 35,
+                  height: 35,
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [Color(0xFFCB94F7), Color(0xFFD6BEFA)],
+                    ),
+                    borderRadius: BorderRadius.circular(17.5),
+                  ),
+                  child: const Icon(Icons.psychology, color: Colors.white, size: 20),
+                ),
+                const SizedBox(width: 8),
+              ],
+              Flexible(
+                child: Container(
+                  padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+                  decoration: BoxDecoration(
+                    gradient: isLara
+                        ? const LinearGradient(
+                            colors: [Color(0xFFE8D5FF), Color(0xFFD6BEFA)],
+                          )
+                        : const LinearGradient(
+                            colors: [Color(0xFFCB94F7), Color(0xFFD6BEFA)],
+                          ),
+                    borderRadius: BorderRadius.only(
+                      topLeft: const Radius.circular(20),
+                      topRight: const Radius.circular(20),
+                      bottomLeft: Radius.circular(isLara ? 4 : 20),
+                      bottomRight: Radius.circular(isLara ? 20 : 4),
+                    ),
+                    boxShadow: [
+                      BoxShadow(
+                        color: Colors.black.withOpacity(0.05),
+                        blurRadius: 5,
+                        offset: const Offset(0, 2),
+                      ),
+                    ],
+                  ),
+                  child: Text(
+                    message,
                     style: TextStyle(
-                      fontSize: 18,
-                      color: Colors.black54,
+                      color: isLara ? Colors.black87 : Colors.white,
+                      fontSize: 15,
+                      height: 1.4,
                     ),
                   ),
-                  const SizedBox(height: 24),
-                  ElevatedButton(
-                    onPressed: () {},
-                    style: ElevatedButton.styleFrom(
-                      backgroundColor: const Color(0xFFCB94F7),
-                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: const Text(
-                      'Start Chat',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.bold,
-                      ),
-                    ),
-                  ),
-                  const SizedBox(height: 20),
-                ],
+                ),
+              ),
+            ],
+          ),
+          const SizedBox(height: 4),
+          Padding(
+            padding: EdgeInsets.only(
+              left: isLara ? 43 : 0,
+              right: isLara ? 0 : 8,
+            ),
+            child: Text(
+              time,
+              style: TextStyle(
+                fontSize: 11,
+                color: Colors.grey.shade500,
               ),
             ),
           ),
