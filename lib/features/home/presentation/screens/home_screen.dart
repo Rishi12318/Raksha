@@ -2023,11 +2023,6 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
   }
 
   Widget _buildMissLaraPage() {
-    final messages = ref.watch(chatProvider);
-    
-    // Auto-scroll when new messages arrive
-    WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
-
     return Container(
       margin: const EdgeInsets.all(16),
       padding: const EdgeInsets.all(20),
@@ -2050,9 +2045,12 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
+        crossAxisAlignment: CrossAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          // Miss Lara AI Title
           Row(
+            mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Container(
                 width: 50,
@@ -2076,168 +2074,341 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
               const Text(
                 'Miss Lara AI',
                 style: TextStyle(
-                  fontSize: 24,
+                  fontSize: 28,
                   fontWeight: FontWeight.bold,
                   color: Colors.black87,
                 ),
               ),
-              const Spacer(),
+            ],
+          ),
+          
+          const SizedBox(height: 16),
+          
+          // Online Status
+          Container(
+            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            decoration: BoxDecoration(
+              color: Colors.green.shade100,
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Icon(Icons.circle, color: Colors.green.shade600, size: 10),
+                const SizedBox(width: 8),
+                Text(
+                  'Online & Ready to Help',
+                  style: TextStyle(
+                    fontSize: 14,
+                    color: Colors.green.shade700,
+                    fontWeight: FontWeight.w600,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          
+          const Spacer(),
+          
+          // Reading Animation - Bigger Size
+          SizedBox(
+            width: 300,
+            height: 300,
+            child: Lottie.asset(
+              'assets/animations/reading.json',
+              fit: BoxFit.contain,
+            ),
+          ),
+          
+          const SizedBox(height: 24),
+          
+          // Description Text
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 20),
+            child: Text(
+              'Your Personal Safety Companion',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 20,
+                fontWeight: FontWeight.bold,
+                color: Colors.black87,
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 12),
+          
+          const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 30),
+            child: Text(
+              'I\'m here to help you 24/7 with safety tips, emergency guidance, and wellness support.',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.black54,
+                height: 1.5,
+              ),
+            ),
+          ),
+          
+          const Spacer(),
+          
+          // Talk Button
+          SizedBox(
+            width: double.infinity,
+            height: 60,
+            child: ElevatedButton(
+              onPressed: _openChatDialog,
+              style: ElevatedButton.styleFrom(
+                backgroundColor: const Color(0xFFCB94F7),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+                elevation: 8,
+                shadowColor: const Color(0xFFCB94F7).withOpacity(0.5),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: const [
+                  Icon(Icons.chat_bubble, color: Colors.white, size: 28),
+                  SizedBox(width: 12),
+                  Text(
+                    'Talk to Miss Lara',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          ),
+          
+          const SizedBox(height: 16),
+        ],
+      ),
+    );
+  }
+
+  void _openChatDialog() {
+    showDialog(
+      context: context,
+      barrierColor: Colors.black54,
+      builder: (context) => Dialog(
+        backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.all(16),
+        child: Container(
+          height: MediaQuery.of(context).size.height * 0.85,
+          decoration: BoxDecoration(
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFFE8D5FF),
+                Color(0xFFD6BEFA),
+              ],
+            ),
+            borderRadius: BorderRadius.circular(30),
+          ),
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            children: [
+              // Header
+              Row(
+                children: [
+                  Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFCB94F7), Color(0xFFD6BEFA)],
+                      ),
+                      borderRadius: BorderRadius.circular(22.5),
+                    ),
+                    child: const Icon(Icons.psychology, color: Colors.white, size: 24),
+                  ),
+                  const SizedBox(width: 12),
+                  const Text(
+                    'Miss Lara AI',
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.black87,
+                    ),
+                  ),
+                  const Spacer(),
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 5),
+                    decoration: BoxDecoration(
+                      color: Colors.green.shade100,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Row(
+                      children: [
+                        Icon(Icons.circle, color: Colors.green.shade600, size: 8),
+                        const SizedBox(width: 6),
+                        Text(
+                          'Online',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.green.shade700,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  IconButton(
+                    icon: const Icon(Icons.close, color: Colors.black54),
+                    onPressed: () => Navigator.pop(context),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 16),
+              
+              // Chat Area
+              Expanded(
+                child: Container(
+                  padding: const EdgeInsets.all(16),
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  child: Consumer(
+                    builder: (context, ref, child) {
+                      final messages = ref.watch(chatProvider);
+                      
+                      // Auto-scroll when new messages arrive
+                      WidgetsBinding.instance.addPostFrameCallback((_) => _scrollToBottom());
+                      
+                      if (messages.isEmpty) {
+                        return const Center(
+                          child: CircularProgressIndicator(
+                            valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFCB94F7)),
+                          ),
+                        );
+                      }
+                      
+                      return ListView.builder(
+                        controller: _chatScrollController,
+                        itemCount: messages.length,
+                        itemBuilder: (context, index) {
+                          final message = messages[index];
+                          if (message.isLoading) {
+                            return _buildTypingIndicator();
+                          }
+                          return _buildChatBubble(
+                            isLara: message.isLara,
+                            message: message.message,
+                            time: _formatTime(message.timestamp),
+                          );
+                        },
+                      );
+                    },
+                  ),
+                ),
+              ),
+              
+              const SizedBox(height: 12),
+              
+              // Quick action buttons
+              SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                child: Row(
+                  children: [
+                    _buildQuickActionButton(
+                      'Safety Tips',
+                      Icons.security,
+                      () {
+                        ref.read(chatProvider.notifier).sendMessage('Give me safety tips');
+                        _scrollToBottom();
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    _buildQuickActionButton(
+                      'Emergency Help',
+                      Icons.warning_amber_rounded,
+                      () {
+                        ref.read(chatProvider.notifier).sendMessage('What should I do in an emergency?');
+                        _scrollToBottom();
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    _buildQuickActionButton(
+                      'Feeling Stressed',
+                      Icons.spa,
+                      () {
+                        ref.read(chatProvider.notifier).sendMessage('I\'m feeling stressed');
+                        _scrollToBottom();
+                      },
+                    ),
+                    const SizedBox(width: 8),
+                    _buildQuickActionButton(
+                      'Random Tip',
+                      Icons.lightbulb_outline,
+                      () {
+                        ref.read(chatProvider.notifier).getSafetyTip();
+                        _scrollToBottom();
+                      },
+                    ),
+                  ],
+                ),
+              ),
+              
+              const SizedBox(height: 12),
+              
+              // Input Field
               Container(
-                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
                 decoration: BoxDecoration(
-                  color: Colors.green.shade100,
-                  borderRadius: BorderRadius.circular(20),
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(30),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.05),
+                      blurRadius: 10,
+                      offset: const Offset(0, 2),
+                    ),
+                  ],
                 ),
                 child: Row(
                   children: [
-                    Icon(Icons.circle, color: Colors.green.shade600, size: 8),
-                    const SizedBox(width: 6),
-                    Text(
-                      'Online',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.green.shade700,
-                        fontWeight: FontWeight.w600,
+                    IconButton(
+                      icon: const Icon(Icons.emoji_emotions_outlined, color: Color(0xFFCB94F7)),
+                      onPressed: () {},
+                    ),
+                    Expanded(
+                      child: TextField(
+                        controller: _messageController,
+                        decoration: const InputDecoration(
+                          hintText: 'Type your message...',
+                          hintStyle: TextStyle(color: Colors.grey),
+                          border: InputBorder.none,
+                        ),
+                        onSubmitted: (_) => _sendMessage(),
+                      ),
+                    ),
+                    Container(
+                      width: 40,
+                      height: 40,
+                      decoration: BoxDecoration(
+                        gradient: const LinearGradient(
+                          colors: [Color(0xFFCB94F7), Color(0xFFD6BEFA)],
+                        ),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: IconButton(
+                        icon: const Icon(Icons.send, color: Colors.white, size: 20),
+                        onPressed: _sendMessage,
                       ),
                     ),
                   ],
                 ),
               ),
-              IconButton(
-                icon: const Icon(Icons.refresh, color: Colors.black54),
-                onPressed: () {
-                  ref.read(chatProvider.notifier).clearChat();
-                },
-                tooltip: 'Clear chat',
-              ),
             ],
           ),
-          const SizedBox(height: 16),
-          Expanded(
-            child: Container(
-              padding: const EdgeInsets.all(16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: BorderRadius.circular(20),
-              ),
-              child: messages.isEmpty
-                  ? const Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(Color(0xFFCB94F7)),
-                      ),
-                    )
-                  : ListView.builder(
-                      controller: _chatScrollController,
-                      itemCount: messages.length,
-                      itemBuilder: (context, index) {
-                        final message = messages[index];
-                        if (message.isLoading) {
-                          return _buildTypingIndicator();
-                        }
-                        return _buildChatBubble(
-                          isLara: message.isLara,
-                          message: message.message,
-                          time: _formatTime(message.timestamp),
-                        );
-                      },
-                    ),
-            ),
-          ),
-          const SizedBox(height: 12),
-          // Quick action buttons
-          SingleChildScrollView(
-            scrollDirection: Axis.horizontal,
-            child: Row(
-              children: [
-                _buildQuickActionButton(
-                  'Safety Tips',
-                  Icons.security,
-                  () {
-                    ref.read(chatProvider.notifier).sendMessage('Give me safety tips');
-                    _scrollToBottom();
-                  },
-                ),
-                const SizedBox(width: 8),
-                _buildQuickActionButton(
-                  'Emergency Help',
-                  Icons.warning_amber_rounded,
-                  () {
-                    ref.read(chatProvider.notifier).sendMessage('What should I do in an emergency?');
-                    _scrollToBottom();
-                  },
-                ),
-                const SizedBox(width: 8),
-                _buildQuickActionButton(
-                  'Feeling Stressed',
-                  Icons.spa,
-                  () {
-                    ref.read(chatProvider.notifier).sendMessage('I\'m feeling stressed');
-                    _scrollToBottom();
-                  },
-                ),
-                const SizedBox(width: 8),
-                _buildQuickActionButton(
-                  'Random Tip',
-                  Icons.lightbulb_outline,
-                  () {
-                    ref.read(chatProvider.notifier).getSafetyTip();
-                    _scrollToBottom();
-                  },
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 12),
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.white,
-              borderRadius: BorderRadius.circular(30),
-              boxShadow: [
-                BoxShadow(
-                  color: Colors.black.withOpacity(0.05),
-                  blurRadius: 10,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.emoji_emotions_outlined, color: Color(0xFFCB94F7)),
-                  onPressed: () {
-                    // Could add emoji picker here
-                  },
-                ),
-                Expanded(
-                  child: TextField(
-                    controller: _messageController,
-                    decoration: const InputDecoration(
-                      hintText: 'Type your message...',
-                      hintStyle: TextStyle(color: Colors.grey),
-                      border: InputBorder.none,
-                    ),
-                    onSubmitted: (_) => _sendMessage(),
-                  ),
-                ),
-                Container(
-                  width: 40,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFFCB94F7), Color(0xFFD6BEFA)],
-                    ),
-                    borderRadius: BorderRadius.circular(20),
-                  ),
-                  child: IconButton(
-                    icon: const Icon(Icons.send, color: Colors.white, size: 20),
-                    onPressed: _sendMessage,
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ],
+        ),
       ),
     );
   }
