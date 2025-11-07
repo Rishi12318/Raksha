@@ -98,24 +98,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              AnimatedBuilder(
-                animation: _flowerController,
-                builder: (context, child) {
-                  return Transform.rotate(
-                    angle: _flowerController.value * 2 * math.pi,
-                    child: SizedBox(
-                      width: 150,
-                      height: 150,
-                      child: CustomPaint(
-                        painter: FlowerPainter(
-                          petals: 8,
-                          color: const Color(0xFFCB94F7),
-                          centerColor: const Color(0xFFD6BEFA),
-                        ),
-                      ),
-                    ),
-                  );
-                },
+              SizedBox(
+                width: 200,
+                height: 200,
+                child: Lottie.asset(
+                  'animations/flower.json',
+                  fit: BoxFit.contain,
+                ),
               ),
               const SizedBox(height: 24),
               Text(
@@ -908,48 +897,52 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
               color: Colors.black87,
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
           Expanded(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                SizedBox(
-                  width: 120,
-                  height: 120,
-                  child: Lottie.asset(
-                    'assets/animations/reading.json',
-                    fit: BoxFit.contain,
-                  ),
-                ),
-                const SizedBox(height: 24),
-                const Text(
-                  'Your personal safety companion',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    fontSize: 18,
-                    color: Colors.black54,
-                  ),
-                ),
-                const SizedBox(height: 32),
-                ElevatedButton(
-                  onPressed: () {},
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFCB94F7),
-                    padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  SizedBox(
+                    width: 200,
+                    height: 200,
+                    child: Lottie.asset(
+                      'assets/animations/reading.json',
+                      fit: BoxFit.contain,
                     ),
                   ),
-                  child: const Text(
-                    'Start Chat',
+                  const SizedBox(height: 20),
+                  const Text(
+                    'Your personal safety companion',
+                    textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white,
                       fontSize: 18,
-                      fontWeight: FontWeight.bold,
+                      color: Colors.black54,
                     ),
                   ),
-                ),
-              ],
+                  const SizedBox(height: 24),
+                  ElevatedButton(
+                    onPressed: () {},
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: const Color(0xFFCB94F7),
+                      padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(30),
+                      ),
+                    ),
+                    child: const Text(
+                      'Start Chat',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
+              ),
             ),
           ),
         ],
