@@ -1928,6 +1928,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
     return GestureDetector(
       onTap: () => _showEmergencyDetails(title, icon, color),
       child: Container(
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(24),
@@ -1941,16 +1942,19 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, color: Colors.white, size: 48),
-            const SizedBox(height: 12),
+            Icon(icon, color: Colors.white, size: 42),
+            const SizedBox(height: 8),
             Text(
               title,
               textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 15,
+                fontSize: 14,
               ),
             ),
           ],
@@ -2045,138 +2049,146 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
         ],
       ),
       child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          // Miss Lara AI Title
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
+          // Top Section - Title and Status
+          Column(
             children: [
-              Container(
-                width: 50,
-                height: 50,
-                decoration: BoxDecoration(
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFFCB94F7), Color(0xFFD6BEFA)],
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Container(
+                    width: 45,
+                    height: 45,
+                    decoration: BoxDecoration(
+                      gradient: const LinearGradient(
+                        colors: [Color(0xFFCB94F7), Color(0xFFD6BEFA)],
+                      ),
+                      borderRadius: BorderRadius.circular(22.5),
+                      boxShadow: [
+                        BoxShadow(
+                          color: const Color(0xFFCB94F7).withOpacity(0.4),
+                          blurRadius: 8,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: const Icon(Icons.psychology, color: Colors.white, size: 24),
                   ),
-                  borderRadius: BorderRadius.circular(25),
-                  boxShadow: [
-                    BoxShadow(
-                      color: const Color(0xFFCB94F7).withOpacity(0.4),
-                      blurRadius: 8,
-                      offset: const Offset(0, 4),
+                  const SizedBox(width: 12),
+                  const Flexible(
+                    child: Text(
+                      'Miss Lara AI',
+                      style: TextStyle(
+                        fontSize: 24,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                      overflow: TextOverflow.ellipsis,
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 12),
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+                decoration: BoxDecoration(
+                  color: Colors.green.shade100,
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.circle, color: Colors.green.shade600, size: 8),
+                    const SizedBox(width: 6),
+                    Text(
+                      'Online & Ready to Help',
+                      style: TextStyle(
+                        fontSize: 12,
+                        color: Colors.green.shade700,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ],
-                ),
-                child: const Icon(Icons.psychology, color: Colors.white, size: 28),
-              ),
-              const SizedBox(width: 12),
-              const Text(
-                'Miss Lara AI',
-                style: TextStyle(
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.black87,
                 ),
               ),
             ],
           ),
           
-          const SizedBox(height: 16),
-          
-          // Online Status
-          Container(
-            padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            decoration: BoxDecoration(
-              color: Colors.green.shade100,
-              borderRadius: BorderRadius.circular(20),
-            ),
-            child: Row(
-              mainAxisSize: MainAxisSize.min,
-              children: [
-                Icon(Icons.circle, color: Colors.green.shade600, size: 10),
-                const SizedBox(width: 8),
-                Text(
-                  'Online & Ready to Help',
-                  style: TextStyle(
-                    fontSize: 14,
-                    color: Colors.green.shade700,
-                    fontWeight: FontWeight.w600,
+          // Middle Section - Animation and Description
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  const SizedBox(height: 20),
+                  // Reading Animation
+                  SizedBox(
+                    width: 250,
+                    height: 250,
+                    child: Lottie.asset(
+                      'assets/animations/reading.json',
+                      fit: BoxFit.contain,
+                    ),
                   ),
-                ),
-              ],
-            ),
-          ),
-          
-          const Spacer(),
-          
-          // Reading Animation - Bigger Size
-          SizedBox(
-            width: 300,
-            height: 300,
-            child: Lottie.asset(
-              'assets/animations/reading.json',
-              fit: BoxFit.contain,
-            ),
-          ),
-          
-          const SizedBox(height: 24),
-          
-          // Description Text
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 20),
-            child: Text(
-              'Your Personal Safety Companion',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 20,
-                fontWeight: FontWeight.bold,
-                color: Colors.black87,
+                  const SizedBox(height: 20),
+                  // Description Text
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 20),
+                    child: Text(
+                      'Your Personal Safety Companion',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 18,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 8),
+                  const Padding(
+                    padding: EdgeInsets.symmetric(horizontal: 30),
+                    child: Text(
+                      'I\'m here to help you 24/7 with safety tips, emergency guidance, and wellness support.',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        fontSize: 13,
+                        color: Colors.black54,
+                        height: 1.4,
+                      ),
+                    ),
+                  ),
+                  const SizedBox(height: 20),
+                ],
               ),
             ),
           ),
           
-          const SizedBox(height: 12),
-          
-          const Padding(
-            padding: EdgeInsets.symmetric(horizontal: 30),
-            child: Text(
-              'I\'m here to help you 24/7 with safety tips, emergency guidance, and wellness support.',
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontSize: 14,
-                color: Colors.black54,
-                height: 1.5,
-              ),
-            ),
-          ),
-          
-          const Spacer(),
-          
-          // Talk Button
+          // Bottom Section - Talk Button
           SizedBox(
             width: double.infinity,
-            height: 60,
+            height: 55,
             child: ElevatedButton(
               onPressed: _openChatDialog,
               style: ElevatedButton.styleFrom(
                 backgroundColor: const Color(0xFFCB94F7),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
+                  borderRadius: BorderRadius.circular(27.5),
                 ),
-                elevation: 8,
-                shadowColor: const Color(0xFFCB94F7).withOpacity(0.5),
+                elevation: 6,
+                shadowColor: const Color(0xFFCB94F7).withOpacity(0.4),
               ),
-              child: Row(
+              child: const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.chat_bubble, color: Colors.white, size: 28),
-                  SizedBox(width: 12),
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  Icon(Icons.chat_bubble, color: Colors.white, size: 24),
+                  SizedBox(width: 10),
                   Text(
                     'Talk to Miss Lara',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 20,
+                      fontSize: 18,
                       fontWeight: FontWeight.bold,
                     ),
                   ),
@@ -2184,8 +2196,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
               ),
             ),
           ),
-          
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
         ],
       ),
     );
@@ -2655,6 +2666,7 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
     return GestureDetector(
       onTap: () => _showQuickActionDetails(title, icon, color),
       child: Container(
+        padding: const EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(24),
@@ -2668,13 +2680,17 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.min,
           children: [
-            Icon(icon, size: 48, color: Colors.black54),
-            const SizedBox(height: 12),
+            Icon(icon, size: 42, color: Colors.black54),
+            const SizedBox(height: 8),
             Text(
               title,
+              textAlign: TextAlign.center,
+              maxLines: 2,
+              overflow: TextOverflow.ellipsis,
               style: const TextStyle(
-                fontSize: 15,
+                fontSize: 14,
                 fontWeight: FontWeight.w600,
                 color: Colors.black87,
               ),
@@ -2691,55 +2707,61 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
       barrierColor: Colors.black87,
       builder: (context) => Dialog(
         backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.all(20),
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.75,
-          padding: const EdgeInsets.all(24),
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.8,
+            maxWidth: MediaQuery.of(context).size.width * 0.9,
+          ),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: const Color(0xFFE8D5FF),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadius.circular(20),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: color,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Icon(icon, color: Colors.white, size: 28),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            fontWeight: FontWeight.bold,
+                            color: Colors.black87,
+                          ),
+                          maxLines: 2,
+                          overflow: TextOverflow.ellipsis,
                         ),
-                        child: Icon(icon, color: Colors.white, size: 36),
-                      ),
-                      const SizedBox(width: 16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            title,
-                            style: const TextStyle(
-                              fontSize: 22,
-                              fontWeight: FontWeight.bold,
-                              color: Colors.black87,
-                            ),
+                        const Text(
+                          'Emergency Service',
+                          style: TextStyle(
+                            fontSize: 12,
+                            color: Colors.black54,
                           ),
-                          const Text(
-                            'Emergency Service',
-                            style: TextStyle(
-                              fontSize: 14,
-                              color: Colors.black54,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
+                        ),
+                      ],
+                    ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.close),
+                    icon: const Icon(Icons.close, size: 20),
                     onPressed: () => Navigator.pop(context),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
                   ),
                 ],
               ),
@@ -2890,43 +2912,49 @@ class _HomeScreenState extends ConsumerState<HomeScreen> with TickerProviderStat
       barrierColor: Colors.black87,
       builder: (context) => Dialog(
         backgroundColor: Colors.transparent,
+        insetPadding: const EdgeInsets.all(20),
         child: Container(
-          height: MediaQuery.of(context).size.height * 0.75,
-          padding: const EdgeInsets.all(24),
+          constraints: BoxConstraints(
+            maxHeight: MediaQuery.of(context).size.height * 0.8,
+            maxWidth: MediaQuery.of(context).size.width * 0.9,
+          ),
+          padding: const EdgeInsets.all(20),
           decoration: BoxDecoration(
             color: const Color(0xFFE8D5FF),
             borderRadius: BorderRadius.circular(30),
           ),
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Row(
-                    children: [
-                      Container(
-                        padding: const EdgeInsets.all(16),
-                        decoration: BoxDecoration(
-                          color: color,
-                          borderRadius: BorderRadius.circular(20),
-                        ),
-                        child: Icon(icon, color: Colors.black54, size: 36),
+                  Container(
+                    padding: const EdgeInsets.all(12),
+                    decoration: BoxDecoration(
+                      color: color,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                    child: Icon(icon, color: Colors.black54, size: 28),
+                  ),
+                  const SizedBox(width: 12),
+                  Expanded(
+                    child: Text(
+                      title,
+                      style: const TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                        color: Colors.black87,
                       ),
-                      const SizedBox(width: 16),
-                      Text(
-                        title,
-                        style: const TextStyle(
-                          fontSize: 24,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                        ),
-                      ),
-                    ],
+                      maxLines: 1,
+                      overflow: TextOverflow.ellipsis,
+                    ),
                   ),
                   IconButton(
-                    icon: const Icon(Icons.close),
+                    icon: const Icon(Icons.close, size: 20),
                     onPressed: () => Navigator.pop(context),
+                    padding: EdgeInsets.zero,
+                    constraints: const BoxConstraints(),
                   ),
                 ],
               ),
